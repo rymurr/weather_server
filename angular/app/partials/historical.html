@@ -8,6 +8,14 @@
     <button ng-repeat="sensor in sensors"  type="button" class="btn btn-default" btn-checkbox ng-model="sensorModel[sensor.name]">{{sensor.name}}</button>
 </div>
 </div>
+<div class="form-horizontal">
+    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dates.start_date" min="'2013-09-06'" max="dates.maxDate" />
+    <!--<button class="btn" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>-->
+    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dates.end_date" min="dates.start_date" max="dates.maxDate" />
+</div>
+<p>
+{{start_dt}}
+</p>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -18,7 +26,7 @@
         <tr ng-repeat="row in historical.items| filter:tableFilter | startFrom:currentPage*pageSize | limitTo:pageSize">
             <td>{{row.device}}</td>
             <td>{{row.sensor}}</td>
-            <td><span ng-bind-html-unsafe="dateConvert(row.timestamp)"></span></td>
+            <td><span ng-bind-html-unsafe="dateConvert(row.timestamp)|date:'medium'"></span></td>
             <td><span ng-bind-html-unsafe="valueConvert(row.value, row.sensor)"></span></td>
         </tr>
     </tbody>

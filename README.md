@@ -16,8 +16,9 @@
 * harden and config: db location, other hard coded stuff. think about scalability?
 * add sorting to table
 * add text box to skip to page 'x'
-* scale for time range
 * default time range and intelligent fetching of data from api
 * fix page count when filtering
+* organize all the icons in a better way
+* connect dates and times to table
 
 

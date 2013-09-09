@@ -4,6 +4,9 @@
 
 angular.module('myApp.controllers', []).
   controller('Historical', ['$scope', '$http', function($scope, $http) {
+      $scope.dates = { start_dt : new Date(),
+                       end_dt   : new Date(),
+                       maxDate  : new Date()};
       $scope.currentPage = 0;
       $scope.pageSize = 25;
       $http.get('/api/v1.0/meteo/measurement/_find').success(function(data){
@@ -21,7 +24,7 @@ angular.module('myApp.controllers', []).
           return Math.ceil($scope.historical.items.length/$scope.pageSize);                
       };
       $scope.dateConvert = function(timestamp){
-        return new Date(timestamp*1000).toString();
+        return new Date(timestamp*1000);
       };
       $scope.valueConvert = function(value, sensor){
         if (sensor === 'temperature') {
