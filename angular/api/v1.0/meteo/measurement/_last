@@ -1,0 +1,11 @@
+{
+  "items": {
+    "device": "MeteoBedroom", 
+    "timestamp": 1378640556.187, 
+    "values": {
+      "humidity": 54.0, 
+      "pressure": 1017.0, 
+      "temperature": 18.5
+    }
+  }
+}
