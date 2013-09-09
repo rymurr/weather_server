@@ -1,11 +1,9 @@
 
 ##TODO:
 
-* add angular project into flask project
+* add angular project into flask project <- done but in a hacky way
 * hook up various buttons on index page
-* set up views for each tab
 * set up views for individual devices
-* hook into mongo
 * add login
 * make prettier
 * work on data displays for each page -- nice css and icons
@@ -13,4 +11,13 @@
 * add in d3 plots
 * figure out how all the deployment stuff works for angular apps
 * uwsgi and nginx is the way to go (http://flask.pocoo.org/docs/deploying/uwsgi/) for serving
+* add all scripts as cdn links
+* s3 backup of mongo data
+* harden and config: db location, other hard coded stuff. think about scalability?
+* add sorting to table
+* add text box to skip to page 'x'
+* scale for time range
+* default time range and intelligent fetching of data from api
+* fix page count when filtering
+
 

@@ -52,7 +52,9 @@ def convert_for_json_last(items, devices):
 def convert_for_json(items):
     df = pandas.DataFrame(items)
     df['timestamp'] = df.timestamp.map(lambda x:time.mktime(x.utctimetuple()) + x.microsecond*1E-6)
-    return {'items':df.drop(['_id'],axis=1).T.to_dict().values()}
+    items = df.drop(['_id'], axis=1).T
+    print items.index
+    return {'items':items.to_dict().values(), 'cols':items.index.values.tolist()}
 
 
 def convert_query_helper(query):
@@ -69,5 +71,6 @@ def convert_timestamp_helper(query):
     if 'timestamp_ub' in query:
         tsq["$lte"] = datetime.datetime.utcfromtimestamp(float(query['timestamp_ub']))
         del query['timestamp_ub']
-    query['timestamp'] = tsq
+    if tsq:
+        query['timestamp'] = tsq
     return query

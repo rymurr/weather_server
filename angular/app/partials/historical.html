@@ -1,2 +1,32 @@
-<p>This is the partial for view 1.</p>
-{{currentActive}}
+<div class="btn-toolbar ">
+<div class="btn-group" >
+    <button ng-repeat="device in devices" type="button" class="btn btn-default" btn-checkbox ng-model="deviceModel[device.name]">{{device.name}}</button>
+</div>
+</div>
+<div class="btn-toolbar ">
+<div class "btn-group">
+    <button ng-repeat="sensor in sensors"  type="button" class="btn btn-default" btn-checkbox ng-model="sensorModel[sensor.name]">{{sensor.name}}</button>
+</div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th ng-repeat="row in historical.cols">{{row}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in historical.items| filter:tableFilter | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <td>{{row.device}}</td>
+            <td>{{row.sensor}}</td>
+            <td><span ng-bind-html-unsafe="dateConvert(row.timestamp)"></span></td>
+            <td><span ng-bind-html-unsafe="valueConvert(row.value, row.sensor)"></span></td>
+        </tr>
+    </tbody>
+</table>
+<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" type="button" class="btn btn-primary">
+    Previous
+</button>
+{{currentPage+1}}/{{numberOfPages()}}
+<button ng-disabled="currentPage >= chartdata.length/pageSize - 1" ng-click="currentPage=currentPage+1" type="button" class="btn btn-primary">
+    Next
+</button>
