@@ -4,9 +4,13 @@
 
 angular.module('myApp.controllers', []).
   controller('Historical', ['$scope', '$http', function($scope, $http) {
-      $scope.dates = { start_dt : new Date(),
+      $scope.startDt = new Date();
+      $scope.endDt = new Date();
+      $scope.dates = { start_dt : new Date(2013,8,6,0,0,0,0),
                        end_dt   : new Date(),
                        maxDate  : new Date()};
+      $scope.time = { start_time: new Date(2013,8,6,0,0,0,0),
+                      end_time  : new Date(2013,8,6,0,0,0,0)};  
       $scope.currentPage = 0;
       $scope.pageSize = 25;
       $http.get('/api/v1.0/meteo/measurement/_find').success(function(data){
@@ -19,6 +23,7 @@ angular.module('myApp.controllers', []).
         $scope.historical.items.map(function(obj){if (!(obj.device in $scope.deviceModel)){$scope.devices.push({'name':obj.device,'id':i});$scope.deviceModel[obj.device]=false;i+=1;}});    
         i=1;
         $scope.historical.items.map(function(obj){if (!(obj.sensor in $scope.sensorModel)){$scope.sensors.push({'name':obj.sensor,'id':i});$scope.sensorModel[obj.sensor]=false;i+=1;}});    
+        $scope.changed();
       });
       $scope.numberOfPages=function(){
           return Math.ceil($scope.historical.items.length/$scope.pageSize);                
@@ -40,12 +45,36 @@ angular.module('myApp.controllers', []).
         }
         return value;
       };
-     $scope.tableFilter = function(obj) {
-        if ($scope.deviceModel[obj.device] && $scope.sensorModel[obj.sensor]){
-            return true;
+      $scope.tableFilter = function(obj) {
+        if (!$scope.deviceModel[obj.device]) {
+            return false;
         }
-        return false;
-    }   
+        if (!$scope.sensorModel[obj.sensor]) {
+            return false;
+        }
+        var dt = new Date(obj.timestamp*1000);
+        if ($scope.startDt > dt) {
+            return false;
+        }
+        if ($scope.endDt < dt) {
+            return false;
+        }
+        return true;
+      };
+      $scope.changed = function() {
+        $scope.startDt.setUTCDate($scope.dates.start_dt.getUTCDate());
+        $scope.startDt.setUTCFullYear($scope.dates.start_dt.getUTCFullYear());
+        $scope.startDt.setUTCMonth($scope.dates.start_dt.getUTCMonth());
+        $scope.startDt.setUTCHours($scope.time.start_time.getUTCHours());
+        $scope.startDt.setUTCMinutes($scope.time.start_time.getUTCMinutes());
+        $scope.startDt.setUTCSeconds($scope.time.start_time.getUTCSeconds());
+        $scope.endDt.setUTCDate($scope.dates.end_dt.getUTCDate());
+        $scope.endDt.setUTCFullYear($scope.dates.end_dt.getUTCFullYear());
+        $scope.endDt.setUTCMonth($scope.dates.end_dt.getUTCMonth());
+        $scope.endDt.setUTCHours($scope.time.end_time.getUTCHours());
+        $scope.endDt.setUTCMinutes($scope.time.end_time.getUTCMinutes());
+        $scope.endDt.setUTCSeconds($scope.time.end_time.getUTCSeconds());
+      };  
   }])
   .controller('Current', ['$scope', '$http', function($scope, $http) {
       $http.get('/api/v1.0/meteo/measurement/_last').success(function(data){

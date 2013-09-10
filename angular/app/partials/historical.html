@@ -9,13 +9,18 @@
 </div>
 </div>
 <div class="form-horizontal">
-    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dates.start_date" min="'2013-09-06'" max="dates.maxDate" />
+    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-change="changed()" ng-model="dates.start_dt" min="'2013-09-06'" max="dates.maxDate" />
     <!--<button class="btn" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>-->
-    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="dates.end_date" min="dates.start_date" max="dates.maxDate" />
+    <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-change="changed()" ng-model="dates.end_dt" min="dates.start_date" max="dates.maxDate" />
 </div>
-<p>
-{{start_dt}}
-</p>
+<div class="form-horizontal">
+  <div ng-model="time.start_time" ng-change="changed()" class="well well-small" style="display:inline-block;">
+    <timepicker show-meridian="false"></timepicker>
+  </div>
+  <div ng-model="time.end_time" ng-change="changed()" class="well well-small" style="display:inline-block;">
+    <timepicker show-meridian="false"></timepicker>
+  </div>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
