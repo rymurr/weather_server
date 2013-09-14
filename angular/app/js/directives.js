@@ -40,8 +40,8 @@ angular.module('myApp.directives', []).
         .orient("left");
 
       var line = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
+        .x(function(d) { return x(d.timestamp); })
+        .y(function(d) { return y(d.value); });
 
       var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -58,8 +58,8 @@ angular.module('myApp.directives', []).
         if (!newVal) {
           return;
         }
-  x.domain(d3.extent(newVal, function(d) { return d.date; }));
-  y.domain(d3.extent(newVal, function(d) { return d.close; }));
+  x.domain(d3.extent(newVal, function(d) { return d.timestamp; }));
+  y.domain(d3.extent(newVal, function(d) { return d.value; }));
 
   svg.append("g")
       .attr("class", "x axis")
