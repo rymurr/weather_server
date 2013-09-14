@@ -75,6 +75,10 @@ angular.module('myApp.controllers', []).
         $scope.endDt.setUTCMinutes($scope.time.end_time.getUTCMinutes());
         $scope.endDt.setUTCSeconds($scope.time.end_time.getUTCSeconds());
       };  
+      $scope.data = [];
+      for (var i=0;i<12;++i) {
+        $scope.data.push({date:1379194270000-120000+i*10000,close:i+1});
+      }
   }])
   .controller('Current', ['$scope', '$http', function($scope, $http) {
       $http.get('/api/v1.0/meteo/measurement/_last').success(function(data){
